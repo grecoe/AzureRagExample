@@ -24,6 +24,8 @@ question
   -> answer + only the cited passages
 ```
 
+Method-by-method details are in [../RagService.md](../RagService.md).
+
 The prompt marks every source as untrusted data, and `render_sources` stops a document from closing its own `<source>` block. These steps reduce prompt-injection risk; they do not eliminate it.
 
 The evidence gate and citation check are heuristics. They confirm that each sentence points to a retrieved passage. They do not prove that the passage supports the sentence. Treat every answer as a draft for a person to check against its citations.

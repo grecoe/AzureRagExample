@@ -12,6 +12,7 @@ One Python package, [rag/](rag/README.md), serves two roles from a single contai
 | [main.py](main.py) | Container entry point. Binds `0.0.0.0` in Azure, `127.0.0.1` locally. |
 | [Dockerfile](Dockerfile) | `python:3.12-slim-bookworm`, non-root user `10001`, includes `sample-data`. Build context is the parent folder, filtered by [../.dockerignore](../.dockerignore). ACR Tasks builds it in Azure. |
 | [requirements.txt](requirements.txt) | Pinned versions, tested together. These are dependencies of this sample only. |
+| [RagService.md](RagService.md) | Reference for `ask`, `retrieve` and `embed`, and the Semantic Kernel retrieval tool |
 | [client_example.py](client_example.py) | How an application calls the deployed API with an Entra token |
 | [tests/](tests/README.md) | 23 unit tests; no Azure access needed |
 

@@ -10,5 +10,6 @@ Task-focused guides for running the RAG example after it is deployed. For the de
 | [04-consume.md](04-consume.md) | Use the system from an application, and add a caller safely |
 | [05-operate.md](05-operate.md) | Monitor health, cost and quality |
 | [06-troubleshoot.md](06-troubleshoot.md) | Diagnose common failures |
+| [07-test-search.md](07-test-search.md) | Test search end to end, from unit tests to another application calling the API |
 
 All commands assume PowerShell 7, a signed-in Azure CLI (`az login`) as the operator, and that you start in the `azure-rag-example` folder.
