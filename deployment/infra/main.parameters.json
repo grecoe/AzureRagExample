@@ -1,0 +1,22 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "environmentName": { "value": "${AZURE_ENV_NAME}" },
+    "location": { "value": "${AZURE_LOCATION}" },
+    "searchLocation": { "value": "${AZURE_SEARCH_LOCATION=}" },
+    "resourceGroupName": { "value": "${AZURE_RESOURCE_GROUP_NAME=rg-rag-poc}" },
+    "principalId": { "value": "${AZURE_PRINCIPAL_ID}" },
+    "apiAuthClientId": { "value": "${API_AUTH_CLIENT_ID=}" },
+    "apiIngressEnabled": { "value": "${API_INGRESS_ENABLED=false}" },
+    "enableIngestSchedule": { "value": "${ENABLE_INGEST_SCHEDULE=false}" },
+    "searchIndexName": { "value": "${RAG_INDEX_NAME=rag-docs}" },
+    "sourceKind": { "value": "${RAG_SOURCE_KIND=local}" },
+    "gitUrl": { "value": "${RAG_GIT_URL=}" },
+    "gitRef": { "value": "${RAG_GIT_REF=main}" },
+    "gitInclude": { "value": "${RAG_GIT_INCLUDE=**/*.md}" },
+    "gitAllowedHosts": { "value": "${RAG_GIT_ALLOWED_HOSTS=github.com}" },
+    "apiExists": { "value": "${SERVICE_API_RESOURCE_EXISTS=false}" },
+    "ingestExists": { "value": "${SERVICE_INGEST_RESOURCE_EXISTS=false}" }
+  }
+}

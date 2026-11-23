@@ -1,0 +1,14 @@
+# Filters the context that azd uploads to ACR Tasks (docker.remoteBuild in deployment/azure.yaml).
+# The context is this whole folder, so keep azd environment files (.env holds deployment
+# outputs), local tooling and docs out of the uploaded archive.
+**/.azure
+**/.env
+**/.venv
+**/venv
+**/__pycache__
+**/*.pyc
+.vscode
+deployment
+howto
+src/tests
+*.md

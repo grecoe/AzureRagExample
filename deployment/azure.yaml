@@ -1,0 +1,41 @@
+# Run every azd command from this folder (deployment/).
+name: rag-example
+
+infra:
+  provider: bicep
+  path: infra
+
+services:
+  # Both services build the same image from src/Dockerfile. RAG_ROLE selects the behavior.
+  # remoteBuild: azd uploads the build context (filtered by ../.dockerignore) and ACR Tasks
+  # builds and pushes the image in Azure. No local Docker is needed.
+  api:
+    project: ../src
+    language: python
+    host: containerapp
+    docker:
+      path: Dockerfile
+      context: ..
+      remoteBuild: true
+  ingest:
+    project: ../src
+    language: python
+    host: containerapp
+    docker:
+      path: Dockerfile
+      context: ..
+      remoteBuild: true
+
+hooks:
+  # Stops provisioning if az and azd are signed in as different users or subscriptions.
+  preprovision:
+    shell: pwsh
+    run: ./scripts/check-identity.ps1
+    continueOnError: false
+    interactive: true
+  # Creates the search index as the operator. Workload identities cannot change schemas.
+  postprovision:
+    shell: pwsh
+    run: ./scripts/create-search-index.ps1
+    continueOnError: false
+    interactive: true

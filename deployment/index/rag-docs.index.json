@@ -1,0 +1,46 @@
+{
+  "name": "rag-docs",
+  "fields": [
+    { "name": "id", "type": "Edm.String", "key": true, "searchable": false, "filterable": true, "retrievable": true },
+    { "name": "source_path", "type": "Edm.String", "searchable": false, "filterable": true, "retrievable": true },
+    { "name": "locator", "type": "Edm.String", "searchable": false, "filterable": false, "retrievable": true },
+    { "name": "title", "type": "Edm.String", "searchable": true, "retrievable": true, "analyzer": "en.microsoft" },
+    { "name": "content", "type": "Edm.String", "searchable": true, "retrievable": true, "analyzer": "en.microsoft" },
+    {
+      "name": "content_vector",
+      "type": "Collection(Edm.Single)",
+      "searchable": true,
+      "retrievable": false,
+      "stored": false,
+      "dimensions": 3072,
+      "vectorSearchProfile": "hnsw-cosine"
+    },
+    { "name": "content_hash", "type": "Edm.String", "searchable": false, "filterable": true, "retrievable": true },
+    { "name": "chunk_ordinal", "type": "Edm.Int32", "filterable": true, "retrievable": true },
+    { "name": "chunk_count", "type": "Edm.Int32", "filterable": true, "retrievable": true },
+    { "name": "source_commit", "type": "Edm.String", "searchable": false, "filterable": true, "retrievable": true },
+    { "name": "ingested_at", "type": "Edm.DateTimeOffset", "filterable": true, "sortable": true, "retrievable": true }
+  ],
+  "vectorSearch": {
+    "algorithms": [
+      {
+        "name": "hnsw",
+        "kind": "hnsw",
+        "hnswParameters": { "m": 4, "efConstruction": 400, "efSearch": 500, "metric": "cosine" }
+      }
+    ],
+    "profiles": [{ "name": "hnsw-cosine", "algorithm": "hnsw" }]
+  },
+  "semantic": {
+    "defaultConfiguration": "default",
+    "configurations": [
+      {
+        "name": "default",
+        "prioritizedFields": {
+          "titleField": { "fieldName": "title" },
+          "prioritizedContentFields": [{ "fieldName": "content" }]
+        }
+      }
+    ]
+  }
+}
