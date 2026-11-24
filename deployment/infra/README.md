@@ -15,7 +15,7 @@ Every resource name ends with a token: `uniqueString(subscription, resource grou
 | `cae-` | Container Apps environment |
 | `ca-api-`, `caj-ingest-` | API Container App, ingestion Container Apps Job |
 | `id-api-`, `id-ingest-` | User-assigned managed identities |
-| `vnet-`, `nsg-cae-` | Virtual network with a subnet delegated to Container Apps, and its NSG |
+| `vnet-`, `nsg-cae-` | Virtual network with a private subnet (no default outbound access) delegated to Container Apps, and its NSG |
 
 ## Parameters
 
@@ -36,6 +36,12 @@ Every resource name ends with a token: `uniqueString(subscription, resource grou
 | `embedding*`, `chat*` | `text-embedding-3-large` v1 at 3,072 dimensions; `gpt-5.6-sol` `2026-07-09` | Capacity is thousands of tokens per minute |
 | `sourceKind`, `git*` | `local` | Set to `git` with an HTTPS URL on an allow-listed host |
 | `apiExists`, `ingestExists` | set by azd | Keep the deployed image on re-provision |
+
+## Outbound Traffic
+
+The Container Apps subnet is private (`defaultOutboundAccess: false`), as SFI-NS2.6.1 requires. The environment's platform-managed load balancer and static public IP carry outbound calls to Search, AI Services, the registry, Application Insights and Microsoft Entra ID. If calls fail after this change, attach a Standard NAT gateway to the subnet; Container Apps does not support the StandardV2 SKU.
+
+For an existing deployment, run `azd provision`. If Azure rejects the subnet change while the environment exists, redeploy with `azd down --purge` and `azd up`. Then run the checks in [../../howto/07-test-search.md](../../howto/07-test-search.md).
 
 ## Validate Without Deploying
 

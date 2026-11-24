@@ -2,6 +2,8 @@
 // to deny environments without VNet injection. Workload-profile
 // environments need a subnet delegated to Microsoft.App/environments (/27 minimum).
 // The NSG keeps the platform default rules: no extra inbound ports are opened.
+// The subnet is private (defaultOutboundAccess: false) to meet SFI-NS2.6.1. Outbound traffic
+// uses the environment's platform-managed load balancer and static public IP instead.
 param location string
 param tags object
 param token string
@@ -26,6 +28,7 @@ resource vnet 'Microsoft.Network/virtualNetworks@2024-05-01' = {
         name: 'snet-cae'
         properties: {
           addressPrefix: infrastructureSubnetPrefix
+          defaultOutboundAccess: false
           networkSecurityGroup: { id: nsg.id }
           delegations: [{ name: 'aca', properties: { serviceName: 'Microsoft.App/environments' } }]
         }
